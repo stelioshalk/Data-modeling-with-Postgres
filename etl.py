@@ -6,6 +6,9 @@ from sql_queries import *
 
 
 def process_song_file(cur, filepath):
+    """
+    function for handling and inserting song data
+    """
     # open song file
     df = pd.read_json(filepath,lines=True)
 
@@ -18,6 +21,9 @@ def process_song_file(cur, filepath):
     cur.execute(artist_table_insert, artist_data)
 
 def process_log_file(cur, filepath):
+        """
+        function for handling and inserting LOG data
+        """
     # open log file
     df = pd.read_json(filepath,lines=True)
 
@@ -42,8 +48,7 @@ def process_log_file(cur, filepath):
     # insert user records
     for i, row in user_df.iterrows():
         if not list(row)[0]=="":
-                cur.execute(user_table_insert, row)
-                conn.commit()
+                cur.execute(user_table_insert, row)               
         else:
              print("empty user_id.Record will be ignored..")
 
@@ -71,6 +76,9 @@ def process_log_file(cur, filepath):
 
 
 def process_data(cur, conn, filepath, func):
+    """
+    Scan and process all json files:songs and logs
+    """
     # get all files matching extension from directory
     all_files = []
     for root, dirs, files in os.walk(filepath):
@@ -94,7 +102,7 @@ def main():
     cur = conn.cursor()
 
     process_data(cur, conn, filepath='data/song_data', func=process_song_file)
-    #process_data(cur, conn, filepath='data/log_data', func=process_log_file)
+    process_data(cur, conn, filepath='data/log_data', func=process_log_file)
 
     conn.close()
 
