@@ -48,4 +48,5 @@ Using the song and log datasets, you'll need to create a star schema optimized f
 4. time - timestamps of records in songplays broken down into specific units
  * start_time, hour, day, week, month, year, weekday
 
+![diagram](/images/Song_ERD.png)
 
